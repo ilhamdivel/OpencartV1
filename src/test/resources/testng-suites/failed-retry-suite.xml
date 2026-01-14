@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+    FAILED TEST RETRY SUITE
+    =======================
+    Purpose: Re-run only failed tests from previous execution.
+    When to Run: After test failures to verify if issues are flaky or real.
+    
+    How to Use:
+    1. Run any test suite
+    2. Check test-output/testng-failed.xml for failed tests
+    3. Run this suite or directly run testng-failed.xml
+    
+    Best Practices:
+    - Create a RetryAnalyzer to automatically retry flaky tests
+    - Set max retry count (usually 2-3)
+    - Investigate and fix truly flaky tests
+-->
+
+<suite name="Failed Test Retry Suite" 
+       verbose="1" 
+       parallel="none"
+       configfailurepolicy="skip">
+
+    <listeners>
+        <listener class-name="utilities.ExtentReportManager"/>
+        <!-- Add RetryListener if you have one -->
+        <!-- <listener class-name="utilities.RetryListener"/> -->
+    </listeners>
+
+    <parameter name="browser" value="chrome"/>
+    <parameter name="environment" value="staging"/>
+
+    <!-- 
+        Option 1: Import the auto-generated failed tests
+        This file is generated automatically after test run
+    -->
+    <!--
+    <suite-files>
+        <suite-file path="../../test-output/testng-failed.xml"/>
+    </suite-files>
+    -->
+
+    <!-- 
+        Option 2: Manually specify failed tests
+        Update this section with tests that need to be re-run
+    -->
+    <test name="Retry - Failed Tests">
+        <classes>
+            <!-- Add failed test classes here -->
+            <class name="testCases.TC001_AccountRegistrationTest"/>
+        </classes>
+    </test>
+
+</suite>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+    MASTER TEST SUITE
+    =================
+    Purpose: Orchestrate multiple test suites in a specific order.
+    When to Run: Full pipeline execution (CI/CD), nightly builds.
+    
+    Execution Order:
+    1. Smoke Tests   -> Quick health check
+    2. Sanity Tests  -> Build stability
+    3. Regression    -> Full coverage (if smoke & sanity pass)
+    
+    Best Practices:
+    - Use <suite-files> to reference other suite XMLs
+    - Smoke should ALWAYS run first
+    - Fail fast - if smoke fails, don't run regression
+-->
+
+<suite name="Master Test Suite" 
+       verbose="1"
+       configfailurepolicy="skip">
+
+    <!-- 
+        CATATAN: Listener ExtentReportManager sekarang didaftarkan via ServiceLoader
+        (META-INF/services/org.testng.ITestNGListener)
+        Tidak perlu didefinisikan di XML lagi!
+    -->
+
+    <!-- Include all test suites in order of priority -->
+    <suite-files>
+        <!-- 1. Run Smoke Tests First (Quick Health Check) -->
+        <!--<suite-file path="./smoke-suite.xml"/>-->
+        
+        <!-- 2. Run Sanity Tests (Build Stability) -->
+        <suite-file path="./sanity-suite.xml"/>
+        
+        <!-- 3. Run Full Regression (Comprehensive Testing) -->
+        <suite-file path="./regression-suite.xml"/>
+    </suite-files>
+
+</suite>

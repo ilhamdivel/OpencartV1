@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+    REGRESSION TEST SUITE
+    =====================
+    Purpose: Full end-to-end testing to ensure existing functionality is not
+broken.
+    When to Run: Before major releases, nightly builds, or after significant
+changes.
+    Duration: Can take 1-4 hours depending on test count.
+    Scope: All functional test cases across all modules.
+    
+    Best Practice:
+    - Run nightly or before each release
+    - Group tests by module for better organization
+    - Use parallel execution to reduce execution time
+-->
+
+<suite name="Regression Test Suite"
+	verbose="1"
+	parallel="tests"
+	thread-count="3"
+	configfailurepolicy="skip"
+	preserve-order="true">
+
+    <!-- 
+        CATATAN: Listener ExtentReportManager sekarang didaftarkan via ServiceLoader
+        (META-INF/services/org.testng.ITestNGListener)
+        Tidak perlu didefinisikan di XML lagi!
+    -->
+
+    <parameter name="browser" value="edge"/>
+    <parameter name="os" value="windows"/>
+
+	<test name="Regression">
+		<groups>
+			<run>
+				<include name="Regression" />
+			</run>
+		</groups>
+		<packages>
+			<package name="testCases" />
+		</packages>
+	</test>
+
+
+</suite>

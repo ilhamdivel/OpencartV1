@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+    DATA-DRIVEN TEST SUITE
+    ======================
+    Purpose: Run tests with multiple data sets (parameterization).
+    When to Run: Testing business logic with various inputs.
+    
+    Data Sources:
+    - TestNG @DataProvider
+    - Excel files
+    - CSV files
+    - Database
+    
+    Best Practices:
+    - Use data-provider-thread-count for parallel data iteration
+    - Keep test data in separate files (testData folder)
+    - Use meaningful parameter names
+-->
+
+<suite name="Data Driven Test Suite" 
+       verbose="1" 
+       parallel="methods"
+       thread-count="2"
+       data-provider-thread-count="3"
+       configfailurepolicy="skip">
+
+    <listeners>
+        <listener class-name="utilities.ExtentReportManager"/>
+    </listeners>
+
+    <parameter name="browser" value="chrome"/>
+    <parameter name="environment" value="staging"/>
+    
+    <!-- Parameters for data files -->
+    <parameter name="testDataPath" value="./testData/"/>
+
+    <test name="Data Driven - User Registration">
+        <!-- Pass test data file path as parameter -->
+        <parameter name="dataFile" value="registration_data.csv"/>
+        <classes>
+            <class name="testCases.TC001_AccountRegistrationTest"/>
+        </classes>
+    </test>
+
+    <!--
+    <test name="Data Driven - Login Scenarios">
+        <parameter name="dataFile" value="login_data.csv"/>
+        <classes>
+            <class name="testCases.TC002_LoginTest"/>
+        </classes>
+    </test>
+    -->
+
+    <!--
+    <test name="Data Driven - Product Search">
+        <parameter name="dataFile" value="search_data.csv"/>
+        <classes>
+            <class name="testCases.TC005_SearchProductTest"/>
+        </classes>
+    </test>
+    -->
+
+</suite>

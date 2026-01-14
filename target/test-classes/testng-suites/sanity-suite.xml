@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+    SANITY TEST SUITE
+    =================
+    Purpose: Verify that new builds are stable enough for further testing.
+    When to Run: After every new build before handing over to QA.
+    Duration: Should complete within 15-30 minutes.
+    Scope: Core workflows - more comprehensive than smoke but focused on stability.
+    
+    Difference from Smoke:
+    - Smoke: Verifies deployment success (does the app launch?)
+    - Sanity: Verifies build stability (are major features intact?)
+-->
+
+<suite name="Sanity Test Suite" 
+       verbose="1" 
+       parallel="none"
+       configfailurepolicy="skip"
+       thread-count="1">
+
+    <!-- 
+        CATATAN: Listener ExtentReportManager sekarang didaftarkan via ServiceLoader
+        (META-INF/services/org.testng.ITestNGListener)
+        Tidak perlu didefinisikan di XML lagi!
+    -->
+
+    <parameter name="browser" value="edge"/>
+    <parameter name="os" value="windows"/>
+
+    <!-- User Account Module -->
+    <test name="Sanity - User Account Module">
+        <groups>
+            <run>
+                <include name="Sanity"/>            
+            </run>
+        </groups>
+        <classes>
+			<class name="testCases.TC001_AccountRegistrationTest"/>
+            <class name="testCases.TC002_LoginTest"/>
+			<!--<class name="testCases.TC003_LoginDDT" />-->
+        </classes>
+    </test>
+
+    <!-- Product Module -->
+    <!--
+    <test name="Sanity - Product Module">
+        <groups>
+            <run>
+                <include name="sanity"/>
+                <include name="product"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="testCases.TC005_SearchProductTest"/>
+            <class name="testCases.TC006_ProductDetailsTest"/>
+        </classes>
+    </test>
+    -->
+
+    <!-- Cart Module -->
+    <!--
+    <test name="Sanity - Cart Module">
+        <groups>
+            <run>
+                <include name="sanity"/>
+                <include name="cart"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="testCases.TC007_AddToCartTest"/>
+            <class name="testCases.TC008_UpdateCartTest"/>
+        </classes>
+    </test>
+    -->
+
+</suite>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+
+<suite name="Cross Browser Test Suite"
+	verbose="1"
+	parallel="tests"
+	thread-count="3"
+	configfailurepolicy="skip">
+
+
+	<!-- Firefox Browser Tests -->
+	<test name="chrome Browser Tests">
+		<parameter name="browser" value="chrome" />
+		<parameter name="os" value="linux" />
+		<classes>
+			<class name="testCases.TC001_AccountRegistrationTest" />
+		</classes>
+	</test>
+	
+	<test name="firefox Browser Tests">
+		<parameter name="browser" value="firefox" />
+		<parameter name="os" value="linux" />
+		<classes>
+			<class name="testCases.TC001_AccountRegistrationTest" />
+		</classes>
+	</test>
+
+
+</suite>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+    ENVIRONMENT-BASED TEST SUITE
+    ============================
+    Purpose: Run tests in different environments (DEV, QA, STAGING, PROD).
+    When to Run: Deployment validation across environments.
+    
+    Environments:
+    - Development (DEV): Developers' testing
+    - Quality Assurance (QA): QA team testing
+    - Staging (STAGING): Pre-production testing
+    - Production (PROD): Production smoke tests only
+    
+    Best Practices:
+    - Never run destructive tests in PROD
+    - Use environment-specific config.properties
+    - PROD should only run read-only smoke tests
+-->
+
+<suite name="Environment Test Suite - QA" 
+       verbose="1" 
+       parallel="classes"
+       thread-count="2"
+       configfailurepolicy="skip">
+
+    <listeners>
+        <listener class-name="utilities.ExtentReportManager"/>
+    </listeners>
+
+    <!-- Change this value based on target environment -->
+    <parameter name="browser" value="chrome"/>
+    <parameter name="environment" value="qa"/>
+    
+    <!-- Environment URLs (handled by config.properties) -->
+    <!-- 
+        DEV:     https://dev.opencart.example.com
+        QA:      https://qa.opencart.example.com  
+        STAGING: https://staging.opencart.example.com
+        PROD:    https://www.opencart.example.com
+    -->
+
+    <test name="Environment Validation Tests">
+        <groups>
+            <run>
+                <include name="smoke"/>
+                <include name="sanity"/>
+                <!-- Exclude destructive tests for PROD -->
+                <exclude name="destructive"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="testCases.TC001_AccountRegistrationTest"/>
+            <!-- Add more test classes -->
+        </classes>
+    </test>
+
+</suite>
